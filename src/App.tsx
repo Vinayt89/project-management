@@ -1,12 +1,11 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"; // ✅ FIXED
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Layout from "./components/Layout";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard"; // ✅ Make sure this exists
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks";
 import Team from "./pages/Team";
@@ -22,10 +21,11 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename="/project-management">
           <Layout>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/" element={<Navigate to="/dashboard" replace />} /> {/* ✅ redirect to dashboard */}
+              <Route path="/dashboard" element={<Dashboard />} /> {/* ✅ make sure this is defined */}
               <Route path="/projects" element={<Projects />} />
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/team" element={<Team />} />
